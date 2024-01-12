@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запрошення на побачення</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #ffc0cb; /* Рожевий колір */
+            margin: 0; /* Видаляє зовнішні відступи */
+            padding: 0; /* Видаляє внутрішні відступи */
+            height: 100vh; /* Налаштування висоти на весь екран */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #invitation {
+            margin-top: 50px;
+        }
+        #invitation p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #yes, #no {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px; /* Додано зовнішні відступи для кнопок */
+        }
+        #image-container {
+            display: none;
+            margin-top: 20px;
+        }
+        #yeeep-message {
+            font-size: 24px;
+            font-weight: bold;
+            color: green;
+            display: none;
+        }
+        #waving-cat {
+            width: 70%; /* Збільшений розмір милого котика на 70% ширини екрану */
+            margin: 20px auto; /* Центруємо котика по центру сторінки */
+            display: none;
+            animation: waveTail 2s infinite alternate; /* Анімація махання хвостиком */
+        }
+        .blinking-stars {
+            font-size: 36px;
+            color: yellow; /* Жовтий колір зірочок */
+            position: absolute;
+        }
+
+        @keyframes waveTail {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(20deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="invitation">
+    <p>Чи підеш зі мною в кіно?</p>
+    <button id="yes" onclick="showImage()">Так</button>
+    <button id="no" onclick="shuffleNo()">Ні</button>
+</div>
+
+<div id="image-container">
+    <!-- Зображення буде вставлене тут -->
+</div>
+
+<div id="yeeep-message">Yeeep!</div>
+
+<div id="waving-cat">&#x1F638;</div>
+
+<script>
+    function showImage() {
+        document.getElementById("invitation").style.display = "none";
+        document.getElementById("image-container").style.display = "block";
+        document.getElementById("yeeep-message").style.display = "block";
+        document.getElementById("waving-cat").style.display = "block";
+        createStars(3); // Кількість зірочок навколо котика
+    }
+
+    function shuffleNo() {
+        var noButton = document.getElementById("no");
+        var xPos = Math.floor(Math.random() * window.innerWidth - noButton.clientWidth);
+        var yPos = Math.floor(Math.random() * window.innerHeight - noButton.clientHeight);
+
+        noButton.style.position = "absolute";
+        noButton.style.left = xPos + "px";
+        noButton.style.top = yPos + "px";
+    }
+
+    function createStars(numberOfStars) {
+        var starsContainer = document.body;
+        var cat = document.getElementById("waving-cat");
+        var catRect = cat.getBoundingClientRect();
+
+        for (var i = 0; i < numberOfStars; i++) {
+            var star = document.createElement("div");
+            star.className = "blinking-stars";
+            star.innerHTML = "&#9733;"; // Зірочка
+            setRandomPosition(star, catRect);
+            starsContainer.appendChild(star);
+        }
+    }
+
+    function setRandomPosition(element, catRect) {
+        var xPos = Math.floor(Math.random() * catRect.width) + catRect.left;
+        var yPos = Math.floor(Math.random() * catRect.height) + catRect.top;
+        element.style.left = xPos + "px";
+        element.style.top = yPos + "px";
+    }
+</script>
+
+</body>
+</html>
